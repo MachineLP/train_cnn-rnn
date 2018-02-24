@@ -1,7 +1,6 @@
 
-# 自己搭建的一个框架，包含模型有：vgg(vgg16,vgg19), resnet(resnet_v2_50,resnet_v2_101,resnet_v2_152), inception_v4, inception_resnet_v2等。
-# 代码有点小乱，欢迎帮忙整理。
-# 此框架主要针对分类任务， 后面会陆续搭建多任务多标签、检测、以及rnn等框架，欢迎关注。
+# 自己搭建的一个训练框架，包含模型有：cnn+rnn: vgg(vgg16,vgg19)+rnn(LSTM, GRU), resnet(resnet_v2_50,resnet_v2_101,resnet_v2_152)+rnnrnn(LSTM, GRU), inception_v4+rnn(LSTM, GRU), inception_resnet_v2+rnn(LSTM, GRU)等。
+# 此框架主要针对分类任务， 后面会陆续搭建多任务多标签、检测等框架，欢迎关注。
 使用说明：
 搭建时使用的环境为：Python3.5, tensorflow1.2.1
 
