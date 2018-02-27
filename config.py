@@ -13,6 +13,7 @@ blog: http://blog.csdn.net/u014365862/article/details/78422372
 IMAGE_HEIGHT = 299
 IMAGE_WIDTH = 299
 num_classes = 4
+EARLY_STOP_PATIENCE = 1000
 # epoch
 epoch = 1000
 batch_size = 1
