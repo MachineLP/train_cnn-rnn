@@ -58,7 +58,7 @@ def g_parameter(checkpoint_exclude_scopes):
     return variables_to_restore,variables_to_train
 
 
-def train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HEIGHT,IMAGE_WIDTH,learning_rate,num_classes,epoch,batch_size=64,keep_prob=0.8,
+def train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HEIGHT,IMAGE_WIDTH,learning_rate,num_classes,epoch,EARLY_STOP_PATIENCE,batch_size=64,keep_prob=0.8,
            arch_model="arch_inception_v4",checkpoint_exclude_scopes="Logits_out", checkpoint_path="pretrain/inception_v4/inception_v4.ckpt"):
 
     X = tf.placeholder(tf.float32, [None, IMAGE_HEIGHT, IMAGE_WIDTH, 3])
@@ -119,6 +119,10 @@ def train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HE
     # checkpoint_path = 'pretrain/inception_v4.ckpt'
     saver_net.restore(sess, checkpoint_path)
 
+    # early stopping
+    best_valid = np.inf
+    best_valid_epoch = 0
+    
     # saver2.restore(sess, "model/fine-tune-1120")
     for epoch_i in range(epoch):
         for batch_i in range(int(train_n/batch_size)):
@@ -150,7 +154,17 @@ def train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HE
         print('Epoch: {:>2}: Validation loss: {:>3.5f}, Validation accuracy: {:>3.5f}'.format(epoch_i, valid_ls/int(valid_n/batch_size), valid_acc/int(valid_n/batch_size)))
         if valid_acc/int(valid_n/batch_size) > 0.90:
             saver2.save(sess, model_path, global_step=epoch_i, write_meta_graph=False)
-        
+        loss_valid = valid_ls/int(valid_n/batch_size)
+        if loss_valid < best_valid:
+            best_valid = loss_valid
+            best_valid_epoch = epoch_i
+        elif best_valid_epoch + EARLY_STOP_PATIENCE < epoch_i:
+            print("Early stopping.")
+            print("Best valid loss was {:.6f} at epoch {}.".format(best_valid, best_valid_epoch))
+            break
+        if valid_acc/int(valid_n/batch_size) > 0.90:
+            saver2.save(sess, model_path, global_step=epoch_i, write_meta_graph=False)
+
         print('>>>>>>>>>>>>>>>>>>>shuffle train_data<<<<<<<<<<<<<<<<<')
         # 每个epoch，重新打乱一次训练集：
         train_data, train_label = shuffle_train_data(train_data, train_label)
