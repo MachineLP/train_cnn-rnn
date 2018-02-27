@@ -34,6 +34,7 @@ if __name__ == '__main__':
     IMAGE_HEIGHT = config.IMAGE_HEIGHT
     IMAGE_WIDTH = config.IMAGE_WIDTH
     num_classes = config.num_classes
+    EARLY_STOP_PATIENCE = config.EARLY_STOP_PATIENCE
     # epoch
     epoch = config.epoch
     batch_size = config.batch_size
@@ -73,5 +74,5 @@ if __name__ == '__main__':
     ##----------------------------------------------------------------------------##
 
     print ("-----------------------------train.py start--------------------------")
-    train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HEIGHT,IMAGE_WIDTH,learning_rate,num_classes,epoch,batch_size,keep_prob,
+    train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HEIGHT,IMAGE_WIDTH,learning_rate,num_classes,epoch,EARLY_STOP_PATIENCE,batch_size,keep_prob,
           arch_model, checkpoint_exclude_scopes, checkpoint_path)
