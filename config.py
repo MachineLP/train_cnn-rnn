@@ -32,7 +32,7 @@ craterDir = "sample_train"
 # arch_model="arch_inception_v4";
 # arch_model="arch_resnet_v2_50"
 # arch_model="vgg_16"
-arch_model="arch_inception_v4_rnn_attention"
+arch_model="arch_inception_v4_rnn"
 
 # 设置要更新的参数和加载的参数，目前是非此即彼，可以自己修改哦
 checkpoint_exclude_scopes = "Logits_out"
