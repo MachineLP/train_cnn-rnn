@@ -77,6 +77,8 @@ def train(train_data,train_label,valid_data,valid_label,train_n,valid_n,IMAGE_HE
         net = net.arch_vgg16(X, num_classes, k_prob, is_training)
     elif arch_model == "arch_inception_v4_rnn":
         net = net.arch_inception_v4_rnn(X, num_classes, k_prob, is_training)
+    elif arch_model == "arch_inception_v4_rnn_attention":
+        net = net.arch_inception_v4_rnn_attention(X, num_classes, k_prob, is_training)
 
     # 
     variables_to_restore,variables_to_train = g_parameter(checkpoint_exclude_scopes)
